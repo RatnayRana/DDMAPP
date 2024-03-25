@@ -42,6 +42,11 @@ function UserAccount() {
           </TouchableOpacity>
         </View>
         </View>
+        <View style={styles.lastone}>
+            <Text style={styles.lastword}>Already have an account? </Text>
+          
+            <Text style={styles.lastword1}>Log in</Text>
+        </View>
       </KeyboardAvoidingView>
     </ScrollView>
   );
@@ -49,6 +54,7 @@ function UserAccount() {
 
 const styles = StyleSheet.create({
   container: {
+    position:"relative",
     height: "100%",
     width: "100%",
     flex: 1,
@@ -103,15 +109,19 @@ const styles = StyleSheet.create({
     marginTop: 23,
   },
   buttonContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop:-200
+    position:"absolute",
+    bottom:90,
+    left:38,
+    
+    // flex: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // marginTop:-500
   },
   button: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "#19C463",
     paddingVertical: 12,
-    paddingHorizontal: 30,
+    paddingHorizontal: 72,
     borderRadius: 10,
     
   },
@@ -119,6 +129,28 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 18,
   },
+  lastone:{
+    position:"relative",
+    flex:1,
+    justifyContent:"center",
+    flexDirection:"row",
+    alignItems:"center",
+    // gap:23
+  },
+  lastword:{
+    position:"absolute",
+    bottom:170,
+    left:50
+  },
+  lastword1:{
+    position:"absolute",
+    bottom:170,
+    left:220,
+    borderBottomWidth: 1, // Adjust the width as needed
+    borderBottomColor: 'black', // Adjust the color as needed
+    borderBottomStyle: 'solid',
+    
+  }
 });
 
 export default UserAccount;
