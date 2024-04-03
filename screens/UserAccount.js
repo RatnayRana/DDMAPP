@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
+  navigate,
   TextInput,
   View,
   StyleSheet,
@@ -7,12 +8,73 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Button,
+  Alert,
+  Pressable,
   TouchableOpacity,
 } from "react-native";
 import CheckBox from "expo-checkbox";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 function UserAccount() {
+  const [name, setname] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSelected, setSelection] = useState(false);
+  const navigation = useNavigation();
+
+  const handleRegister = () => {
+    const user = {
+      name: name,
+      phone: phone,
+      password: password,
+    };
+
+    if (!user.name.trim()) {
+      alert("Please Enter Name");
+      return;
+    }
+    if (!user.phone.trim()) {
+      alert("Please Enter Phone");
+      return;
+    }
+    if (!user.password.trim()) {
+      alert("Please Enter Password");
+      return;
+    }
+
+    if (isSelected) {
+      axios
+        .post("http://192.168.137.2:8000/users/register", user)
+        .then((response) => {
+          if (response.status === 200) {
+            navigation.navigate("Login");
+            setname("");
+            setPassword("");
+            setPhone("");
+            setSelection("");
+            Alert.alert("Registration is successful");
+          } 
+        })
+        .catch((error) => {
+          Alert.alert("Registrattion is unsuccessful");
+          navigation.navigate("UserAccount");
+          setname("");
+          setPassword("");
+          setPhone("");
+          setSelection("");
+          console.error("Error registering user: ", error);
+          // Handle error
+        });
+    } else {
+      Alert.alert(
+        "You have failed to check the terms and the condition of the app"
+      );
+    }
+  };
+
+  // contentContainerStyle={{ flexGrow: 1 }}
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Text style={styles.TextStyle}>
           Create account with {"\n"} Druk Digital Museum
@@ -20,16 +82,36 @@ function UserAccount() {
         <View style={styles.main}>
           <View style={styles.Secondmain}>
             <Text>Username</Text>
-            <TextInput style={styles.userInput}></TextInput>
+            <TextInput
+              style={styles.userInput}
+              value={name}
+              onChangeText={(text) => {
+                setname(text);
+              }}
+            ></TextInput>
             <Text>Phone</Text>
-            <TextInput style={styles.userInput}></TextInput>
+            <TextInput
+              keyboardType="numeric"
+              style={styles.userInput}
+              value={phone}
+              onChangeText={(text) => {
+                setPhone(text);
+              }}
+            ></TextInput>
             <Text>Password</Text>
-            <TextInput style={styles.userInput}></TextInput>
+            <TextInput
+              secureTextEntry={true}
+              style={styles.userInput}
+              value={password}
+              onChangeText={(text) => {
+                setPassword(text);
+              }}
+            ></TextInput>
           </View>
           <View style={styles.subCheckbox}>
             <CheckBox
-              //   value={isSelected}
-              //   onValueChange={setSelection}
+              value={isSelected}
+              onValueChange={setSelection}
               style={styles.checkbox}
             />
             <Text style={styles.label}>
@@ -37,15 +119,19 @@ function UserAccount() {
             </Text>
           </View>
           <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Create Account</Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={styles.button} onPress={handleRegister}>
+              <Text style={styles.buttonText}>Create Account</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.lastone}>
-            <Text style={styles.lastword}>Already have an account? </Text>
-          
+          <Text style={styles.lastword}>Already have an account? </Text>
+          <Pressable
+            style={styles.navigationOne}
+            onPress={() => navigation.navigate("Login")}
+          >
             <Text style={styles.lastword1}>Log in</Text>
+          </Pressable>
         </View>
       </KeyboardAvoidingView>
     </ScrollView>
@@ -54,7 +140,7 @@ function UserAccount() {
 
 const styles = StyleSheet.create({
   container: {
-    position:"relative",
+    position: "relative",
     height: "100%",
     width: "100%",
     flex: 1,
@@ -66,7 +152,7 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: "center",
     fontSize: 22,
-    marginTop: 120,
+    marginTop: 60,
     marginRight: 90,
     // marginBottom: 30,
   },
@@ -109,48 +195,40 @@ const styles = StyleSheet.create({
     marginTop: 23,
   },
   buttonContainer: {
-    position:"absolute",
-    bottom:90,
-    left:38,
-    
-    // flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // marginTop:-500
+    position: "absolute",
+    bottom: 90,
+    left: 38,
   },
   button: {
     backgroundColor: "#19C463",
     paddingVertical: 12,
-    paddingHorizontal: 72,
+    paddingHorizontal: 80,
     borderRadius: 10,
-    
   },
   buttonText: {
     color: "#FFFFFF",
     fontSize: 18,
   },
-  lastone:{
-    position:"relative",
-    flex:1,
-    justifyContent:"center",
-    flexDirection:"row",
-    alignItems:"center",
-    // gap:23
+  lastone: {
+    position: "relative",
+    flex: 1,
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 23,
   },
-  lastword:{
-    position:"absolute",
-    bottom:170,
-    left:50
+  lastword: {
+    position: "absolute",
+    bottom: 160,
+    left: 40,
   },
-  lastword1:{
-    position:"absolute",
-    bottom:170,
-    left:220,
-    borderBottomWidth: 1, // Adjust the width as needed
-    borderBottomColor: 'black', // Adjust the color as needed
-    borderBottomStyle: 'solid',
-    
-  }
+  lastword1: {
+    position: "absolute",
+    bottom: 162,
+    left: 220,
+    borderBottomWidth: 1,
+    borderBottomColor: "black",
+  },
 });
 
 export default UserAccount;

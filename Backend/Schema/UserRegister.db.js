@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
+    },
 
 })
+const UserAccount = mongoose.model("Registration", userSchema);
+
+export default UserAccount
