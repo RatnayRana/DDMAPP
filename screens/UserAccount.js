@@ -44,7 +44,7 @@ function UserAccount() {
 
     if (isSelected) {
       axios
-        .post("http://192.168.137.2:8000/users/register", user)
+        .post("http://192.168.107.252:8000/users/register", user)
         .then((response) => {
           if (response.status === 200) {
             navigation.navigate("Login");

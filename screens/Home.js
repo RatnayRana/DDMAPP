@@ -1,12 +1,13 @@
 import React from 'react'
 import { View,Text} from 'react-native'
+import NavBar from './HelpingComponents/NavBar'
 
 function Home() {
   return (
     <View>
-    <Text>
-        Hello world
-    </Text>
+    
+      <NavBar/>
+    
     </View>
   )
 }

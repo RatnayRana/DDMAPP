@@ -35,13 +35,17 @@ function Login() {
     }
 
     axios
-      .post("http://192.168.137.2:8000/users/login", user)
+      .post("http://192.168.107.252:8000/users/login", user)
       .then((response) => {
         console.log(response.data);
-        Alert.alert("h is Successful");
-        setname("");
-        setPassword("");
+        if(response.status==200){
+          navigation.navigate("Home")
+          Alert.alert("login is Successful");
+          
+        }
+        setPassword("")
         setPhone("");
+        
       })
 
       .catch((error) => {
