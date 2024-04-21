@@ -10,6 +10,7 @@ import Login from "./screens/Login";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Cart from "./screens/Cart.js";
 import Home from "./screens/Home.js";
+import { Entypo } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,8 +19,56 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Cart" component={Cart} />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: "Home",
+          tabBarLabelStyle: { color: "#000000",marginBottom:5,fontWeight:"800"},
+          
+          headerShown: false,
+          tabBarIcon: ({ focused }) => {
+            return focused ? (
+              <Entypo name="home" size={24} color="black" />
+            ) : (
+              <AntDesign name="home" size={24} color="black" />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Cart"
+        component={Home}
+        options={{
+          tabBarLabel: "Cart",
+          tabBarLabelStyle: { color: "#000000",marginBottom:5,fontWeight:"800"},
+          headerShown: false,
+          styles:{color:"white"},
+          tabBarIcon: ({ focused }) => {
+          return  focused ? (
+              <Entypo name="shopping-cart" size={24} color="black" />
+            ) : (
+              <AntDesign name="shoppingcart" size={24} color="black" />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Home}
+        options={{
+          tabBarLabel: "Profile",
+          tabBarLabelStyle: { color: "#000000",marginBottom:5,fontWeight:"800" },
+          headerShown: false,
+          tabBarIcon: ({ focused }) => {
+            return focused ? (
+              <Entypo name="user" size={24} color="black" />
+            ) : (
+              <AntDesign name="user" size={24} color="black" />
+            );
+          },
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -28,7 +77,7 @@ export default function App() {
     <NavigationContainer>
       <StatusBar backgroundColor=" rgb(255,255,255)" barStyle="dark-content" />
       <Stack.Navigator>
-        <Tab.Screen name="Home" component={MyTabs} />
+        <Tab.Screen options={{ headerShown: false }} name="Main" component={MyTabs} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen
           name="UserAccount"
