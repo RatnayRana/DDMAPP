@@ -11,7 +11,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Cart from "./screens/Cart.js";
 import Home from "./screens/Home.js";
 import { Entypo } from "@expo/vector-icons";
-
+import ProductDetails from "./screens/ProductDetails.js";
+import NewProduct from "./screens/NewProduct.js";
 const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
@@ -24,8 +25,8 @@ function MyTabs() {
         component={Home}
         options={{
           tabBarLabel: "Home",
-          tabBarLabelStyle: { color: "#000000",marginBottom:5,fontWeight:"800"},
-          
+          tabBarLabelStyle: { color: "#000000", marginBottom: 5, fontWeight: "800" },
+
           headerShown: false,
           tabBarIcon: ({ focused }) => {
             return focused ? (
@@ -37,15 +38,32 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
+        name="New Product"
+        component={NewProduct}
+        options={{
+          tabBarLabel: "New",
+          tabBarLabelStyle: { color: "#000000", marginBottom: 5, fontWeight: "800" },
+          headerShown: false,
+          styles: { color: "white" },
+          tabBarIcon: ({ focused }) => {
+            return focused ? (
+              <Entypo name="upload" size={24} color="black" />
+              ) : (
+                <AntDesign name="upload" size={24} color="black" />
+              );
+          },
+        }}
+      />
+      <Tab.Screen
         name="Cart"
-        component={Home}
+        component={Cart}
         options={{
           tabBarLabel: "Cart",
-          tabBarLabelStyle: { color: "#000000",marginBottom:5,fontWeight:"800"},
+          tabBarLabelStyle: { color: "#000000", marginBottom: 5, fontWeight: "800" },
           headerShown: false,
-          styles:{color:"white"},
+          styles: { color: "white" },
           tabBarIcon: ({ focused }) => {
-          return  focused ? (
+            return focused ? (
               <Entypo name="shopping-cart" size={24} color="black" />
             ) : (
               <AntDesign name="shoppingcart" size={24} color="black" />
@@ -58,7 +76,7 @@ function MyTabs() {
         component={Home}
         options={{
           tabBarLabel: "Profile",
-          tabBarLabelStyle: { color: "#000000",marginBottom:5,fontWeight:"800" },
+          tabBarLabelStyle: { color: "#000000", marginBottom: 5, fontWeight: "800" },
           headerShown: false,
           tabBarIcon: ({ focused }) => {
             return focused ? (
@@ -82,6 +100,11 @@ export default function App() {
         <Stack.Screen
           name="UserAccount"
           component={UserAccount}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ProductDetails"
+          component={ProductDetails}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -1,12 +1,12 @@
 import React from 'react'
 import { View,Text } from 'react-native'
 
-function Cart() {
+function NewProduct() {
   return (
     <View>
-      <Text>hy</Text>
+        <Text>sfjfs</Text>
     </View>
   )
 }
 
-export default Cart
+export default NewProduct

@@ -27,6 +27,7 @@ function UserAccount() {
       name: name,
       phone: phone,
       password: password,
+      UerRoles:"User"
     };
 
     if (!user.name.trim()) {
